@@ -7,6 +7,9 @@ defmodule Dicti do
     |> String.split()
   end
 
+  @doc """
+  Returns a random word string from wordlist.
+  """
   def rand_word do
     wordlist()
     |> Enum.random()

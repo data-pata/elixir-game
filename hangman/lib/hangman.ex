@@ -11,12 +11,12 @@ defmodule Hangman do
   end
 
   @doc """
-    creates and returns a new game state
+  returns a new game state
   """
   defdelegate new(), to: Game, as: :new_game
-
-  def move(state, mov) do
+  @doc """
+  makes a move/guess
+  """
+  defdelegate move(state, move), to: Game, as: :make_move
     
-  end
-
 end

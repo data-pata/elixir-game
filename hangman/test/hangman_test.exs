@@ -2,15 +2,11 @@ defmodule HangmanTest do
   use ExUnit.Case
   doctest Hangman
 
-  test "greets the world" do
-    assert is_binary(Hangman.hello())
-  end
-
-  test "initializes new game states" do
-    assert Hangman.new() == %Hangman.Game{
-      game_state: :init,
-      turns_left: 7,
-      word: [],
-    }
+  test "initializes new game state struct" do
+    game = Hangman.new()
+    assert game.state === :init
+    assert game.turns_left === 7
+    assert length(game.word) > 0
+    
   end
 end
