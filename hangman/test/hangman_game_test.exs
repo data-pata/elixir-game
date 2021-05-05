@@ -16,16 +16,69 @@ defmodule HangmanGameTest do
   test ":state remains the same for :won and :lost" do
     for state <- [:won, :lost] do
       game = Game.new_game() |> Map.put(:state, state)
-      assert {^game,  _} = Game.make_move(game, "x")
+      assert ^game = Game.make_guess(game, "x")
     end
   end
 
   test "doesn't accept already guessed letters" do
     game = Game.new_game()
-    {game, _tally} = Game.make_move(game, "a")
+    game = Game.make_guess(game, "a")
     assert game.state != :already_guessed
-    {game, _tally} = Game.make_move(game, "a")
+    game = Game.make_guess(game, "a")
     assert game.state == :already_guessed
+  end
+
+  test "score guess when correct" do
+    game = Game.new_game()
+    # [letter | _] = game.word
+    game = Game.score_guess(game, true )
+    assert game.state === :good_guess
+  end
+
+  # test "score guess when incorrect guess" do
+  #   game = Game.new_game()
+  #   game = Game.score_guess(game, false )
+  #   assert game.state === :good_guess
+  # end
+
+  test "good guess move" do
+    game = Game.new_game()
+    game = Game.make_guess(game, hd(game.word))
+    assert game.state === :good_guess
+    assert game.turns_left === 7
+  end
+
+  test "good guess wins game" do
+    game = Game.new_game("abc",7)
+    game = Game.make_guess(game, "a")
+    assert game.state === :good_guess
+    game = Game.make_guess(game, "b")
+    assert game.state === :good_guess
+    game = Game.make_guess(game, "c")
+    assert game.state === :won
+  end
+
+  test "bad guess move" do
+    game = Game.new_game("wyoming", 3)
+    game = Game.make_guess(game, "a")
+    assert game.state === :bad_guess
+    assert game.turns_left === 2
+
+    game = Game.make_guess(game, "b")
+    assert game.state === :bad_guess
+    assert game.turns_left === 1
+
+    game = Game.make_guess(game, "c")
+    assert game.state === :lost
+    assert game.turns_left === 0
+  end
+
+  test "tally reveals guesses only" do
+    game = Game.new_game("wyoming", 3)
+    game = Game.make_guess(game, "w")
+    game = Game.make_guess(game, "y")
+    Game.reveal_guessed(game.word, game.guessed)
+    |> IO.puts
   end
 
 end

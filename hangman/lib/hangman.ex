@@ -6,17 +6,17 @@ defmodule Hangman do
   # Game logic module
   alias Hangman.Game, as: Game
 
-  def hello do
-    IO.puts Dicti.rand_word()
-  end
-
   @doc """
   returns a new game state
   """
   defdelegate new(), to: Game, as: :new_game
+  defdelegate tally(game), to: Game
   @doc """
   makes a move/guess
   """
-  defdelegate move(state, move), to: Game, as: :make_move
-    
+  def make_guess(game_state, guess) do
+    game_state = Game.make_guess(game_state, guess)
+    {game_state, tally(game_state)}
+  end
+
 end
