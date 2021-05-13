@@ -19,23 +19,25 @@ defmodule Hangman.Game do
   takes a string word and a number turns
   returns a game state struct
   """
-
+  def new_game() do
+    new_game(Dict.rand_word(), 7)
+  end
+  
   def new_game(word, turns) do
     %Hangman.Game{
       word: word |> String.codepoints(),
       turns_left: turns
     }
   end
-  def new_game() do
-    new_game(Dict.rand_word(), 7)
-  end
+
 
   def make_guess(game = %{state: state}, _guess)
     when state in [:won,:lost] do
-    game
+    {game, tally(game)}
   end
   def make_guess(game, guess) do
-    _game = accept_guess(game, guess, MapSet.member?(game.guessed, guess))
+    game = accept_guess(game, guess, MapSet.member?(game.guessed, guess))
+    {game, tally(game)}
   end
 
   def tally(game) do

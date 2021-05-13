@@ -15,9 +15,6 @@ defmodule Hangman do
   @doc """
   makes a move/guess
   """
-  def make_guess(game_state, guess) do
-    game_state = Game.make_guess(game_state, guess)
-    {game_state, tally(game_state)}
-  end
+  defdelegate make_guess(game_state, guess), to: Game
 
 end
