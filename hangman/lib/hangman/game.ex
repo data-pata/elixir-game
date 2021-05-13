@@ -1,19 +1,25 @@
 defmodule Hangman.Game do
-  @compile if Mix.env == :test, do: :export_all # export private funcs to test env
+
+  # export private funcs to test env
+  @compile if Mix.env == :test, do: :export_all
+
   @moduledoc """
   Back End / Game Logic / Implementation module
   """
+
   defstruct(
     state: :init,
     turns_left: 7,
     word: [],
     guessed: MapSet.new()
   )
+
   @doc """
   Initializes new game state
   takes a string word and a number turns
   returns a game state struct
   """
+
   def new_game(word, turns) do
     %Hangman.Game{
       word: word |> String.codepoints(),
