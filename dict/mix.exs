@@ -1,9 +1,9 @@
-defmodule Dicti.MixProject do
+defmodule Dict.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :dicti,
+      app: :dict,
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
@@ -14,6 +14,7 @@ defmodule Dicti.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      mod: { Dict.App, [] },
       extra_applications: [:logger]
     ]
   end

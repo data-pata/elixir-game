@@ -21,7 +21,7 @@ defmodule Hangman.Game do
     }
   end
   def new_game() do
-    new_game(Dicti.rand_word(), 7)
+    new_game(Dict.rand_word(), 7)
   end
 
   def make_guess(game = %{state: state}, _guess)
@@ -36,7 +36,8 @@ defmodule Hangman.Game do
     %{
       state: game.state,
       turns_left: game.turns_left,
-      letters: game.word |> reveal_guessed(game.guessed)
+      letters: game.word |> reveal_guessed(game.guessed),
+      guesses: game.guessed |> MapSet.to_list() |> Enum.sort()
     }
   end
 
@@ -72,7 +73,6 @@ defmodule Hangman.Game do
     letters
     |> Enum.map( fn x -> reveal_letter(x, MapSet.member?(guessed_word, x)) end)
   end
-
   defp reveal_letter(letter, true), do: letter
   defp reveal_letter(_letter, _), do: "_"
 

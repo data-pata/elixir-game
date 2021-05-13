@@ -11,6 +11,7 @@ defmodule Hangman do
   """
   defdelegate new(), to: Game, as: :new_game
   defdelegate tally(game), to: Game
+
   @doc """
   makes a move/guess
   """
