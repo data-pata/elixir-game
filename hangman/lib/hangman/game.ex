@@ -22,15 +22,14 @@ defmodule Hangman.Game do
   def new_game() do
     new_game(Dict.rand_word(), 7)
   end
-  
+
   def new_game(word, turns) do
     %Hangman.Game{
       word: word |> String.codepoints(),
       turns_left: turns
     }
   end
-
-
+  
   def make_guess(game = %{state: state}, _guess)
     when state in [:won,:lost] do
     {game, tally(game)}
