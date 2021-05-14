@@ -6,7 +6,7 @@ defmodule Hangman.Game do
   @moduledoc """
   Back End / Game Logic / Implementation module
   """
-
+  
   defstruct(
     state: :init,
     turns_left: 7,
@@ -29,7 +29,7 @@ defmodule Hangman.Game do
       turns_left: turns
     }
   end
-  
+
   def make_guess(game = %{state: state}, _guess)
     when state in [:won,:lost] do
     {game, tally(game)}

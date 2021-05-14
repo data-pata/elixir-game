@@ -5,17 +5,23 @@ defmodule Hangman.GameServer do
   @mod __MODULE__
 
   def start_link() do
-    GenServer.start_link(@mod, nil )
+    GenServer.start_link(@mod, nil)
   end
 
-  # callbacks called by process run by genserver?
-  # return new state, note: does not go via Hangman API
+  # new game
   def init(_) do
     {:ok, Game.new_game() }
   end
-  # callback from GenServer.call(pid, term())
+
+  # make_guess
   def handle_call( {:make_guess, guess}, _from, game_state) do
     {game_state, tally} = Game.make_guess(game_state, guess)
     { :reply, tally, game_state}
   end
+  
+  # get tally from game state
+  def handle_call( {:tally}, _from, game_state) do
+    { :reply, game_state, Game.tally(game_state)}
+  end
+
 end

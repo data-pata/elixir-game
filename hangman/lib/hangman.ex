@@ -3,18 +3,18 @@ defmodule Hangman do
   Defines the API of the hangman game backend
   """
 
-  # Game logic module
-  alias Hangman.Game, as: Game
+  def new() do
+    # DynamicSupervisor.start_child(Hangman.DynamicSupervisor, child())
+    {:ok, pid} = Hangman.App.start_child()
+    pid
+  end
 
-  @doc """
-  returns a new game state
-  """
-  defdelegate new(), to: Game, as: :new_game
-  defdelegate tally(game), to: Game
+  def tally(game_server) do
+    GenServer.call(game_server, { :tally, })
+  end
 
-  @doc """
-  makes a move/guess
-  """
-  defdelegate make_guess(game_state, guess), to: Game
+  def make_guess(game_server, guess) do
+    GenServer.call(game_server, { :make_guess, guess})
+  end
 
 end
