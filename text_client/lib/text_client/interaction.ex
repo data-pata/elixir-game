@@ -4,7 +4,6 @@ defmodule TextClient.Interaction do
   def start() do
     Hangman.new()
     |> setup_state()
-    # |> IO.inspect()
     |> Player.play()
   end
 
@@ -14,10 +13,4 @@ defmodule TextClient.Interaction do
       tally: Hangman.tally(state)
     }
   end
-
-  # infinite loop game play state machine
-  def play(state) do
-
-  end
-
 end

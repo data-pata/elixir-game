@@ -4,11 +4,12 @@ defmodule Hangman.GameServer do
 
   @mod __MODULE__
 
+  @spec start_link :: :ignore | {:error, any} | {:ok, pid}
   def start_link() do
     GenServer.start_link(@mod, nil)
   end
 
-  # new game
+  # new game state linked to this genserver instance
   def init(_) do
     {:ok, Game.new_game() }
   end
@@ -18,10 +19,10 @@ defmodule Hangman.GameServer do
     {game_state, tally} = Game.make_guess(game_state, guess)
     { :reply, tally, game_state}
   end
-  
+
   # get tally from game state
   def handle_call( {:tally}, _from, game_state) do
-    { :reply, game_state, Game.tally(game_state)}
+    { :reply, Game.tally(game_state), game_state }
   end
 
 end

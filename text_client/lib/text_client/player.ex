@@ -34,8 +34,8 @@ defmodule TextClient.Player do
   end
 
   defp action(state) do
-    {gs, tally} = Hangman.make_guess(state.game_service, state.guessed_letter)
-    %State{state | game_service: gs, tally: tally}
+    tally = Hangman.make_guess(state.game_service, state.guessed_letter)
+    %State{state | tally: tally}
     # |> IO.inspect()
   end
 
