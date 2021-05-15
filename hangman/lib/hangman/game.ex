@@ -6,7 +6,7 @@ defmodule Hangman.Game do
   @moduledoc """
   Back End / Game Logic / Implementation module
   """
-  
+
   defstruct(
     state: :init,
     turns_left: 7,
@@ -20,6 +20,7 @@ defmodule Hangman.Game do
   returns a game state struct
   """
   def new_game() do
+    IO.inspect(self())
     new_game(Dict.rand_word(), 7)
   end
 
